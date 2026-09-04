@@ -1,0 +1,50 @@
+<section id="portfolio" class="relative px-5 py-16 md:px-10 md:py-24" data-testid="portfolio-section">
+    <div class="mb-16 flex flex-col gap-6 md:mb-24 md:flex-row md:items-end md:justify-between">
+        <div>
+            <p class="mb-4 text-xs font-bold uppercase tracking-[0.4em] text-[#C6FF00]" data-testid="portfolio-eyebrow">
+                Portfolio
+            </p>
+            <h2
+                class="font-display text-[clamp(2.1rem,8.5vw,7rem)] font-extrabold uppercase leading-[0.9] tracking-tighter">
+                Trabajo <span class="text-stroke-white">reciente</span>
+            </h2>
+        </div>
+        <p class="max-w-xs text-sm text-neutral-400 md:text-base">
+            Una selección de proyectos donde el ruido se convirtió en resultados.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
+        @for (p of projects; track p.name; let i = $index) {
+        <a href="#contacto" (click)="goToContact($event)" [attr.data-testid]="p.testId" [class]="
+          'project-card group relative block overflow-hidden border border-white/15 transition-colors duration-500 hover:border-[#C6FF00] ' +
+          p.span +
+          ' ' +
+          p.ratio
+        ">
+            <img [src]="p.img" [alt]="p.name" loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover grayscale group-hover:grayscale-0"
+                style="transition: transform 1400ms cubic-bezier(0.16,1,0.3,1), filter 1400ms ease;"
+                [style.transform]="'scale(1)'" onmouseenter="this.style.transform='scale(1.15)'"
+                onmouseleave="this.style.transform='scale(1)'" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+            <span
+                class="absolute left-4 top-4 border border-[#C6FF00] bg-black px-2 py-1 font-display text-xs font-bold text-[#C6FF00]">
+                {{ (i + 1).toString().padStart(2, '0') }}
+            </span>
+            <div class="absolute bottom-0 left-0 flex w-full items-end justify-between p-5 md:p-7">
+                <div>
+                    <h3 class="font-display text-2xl font-extrabold uppercase tracking-tight text-white md:text-4xl">
+                        {{ p.name }}
+                    </h3>
+                    <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#C6FF00] md:text-xs">
+                        {{ p.tags }}
+                    </p>
+                </div>
+                <svg lucideArrowUpRight [size]="28" [strokeWidth]="2"
+                    class="text-white transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#C6FF00] md:size-9"></svg>
+            </div>
+        </a>
+        }
+    </div>
+</section>

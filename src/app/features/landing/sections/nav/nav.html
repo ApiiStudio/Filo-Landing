@@ -1,0 +1,53 @@
+<header
+  class="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-black/30 backdrop-blur-xl backdrop-saturate-150"
+>
+  <nav class="flex items-center justify-between px-5 py-4 md:px-10 md:py-6">
+    <a
+      href="#top"
+      data-testid="nav-logo"
+      (click)="go($event, '#top')"
+      class="flex items-end gap-2"
+    >
+      <img [src]="logoUrl" alt="FILO STUDIO" class="h-7 w-auto md:h-9" />
+      <span
+        class="mb-0.5 text-[10px] font-bold uppercase tracking-[0.3em] text-white/70"
+      >
+        Studio
+      </span>
+    </a>
+ 
+    <ul class="hidden items-center gap-8 lg:flex">
+      @for (link of links; track link.href) {
+        <li>
+          <a
+            [href]="link.href"
+            [attr.data-testid]="link.testId"
+            (click)="go($event, link.href)"
+            class="group relative text-xs font-bold uppercase tracking-[0.25em] text-white/80 transition-colors duration-300 hover:text-[#C6FF00]"
+          >
+            {{ link.label }}
+            <span
+              class="absolute -bottom-1 left-0 h-[2px] w-0 bg-[#C6FF00] transition-all duration-300 group-hover:w-full"
+            ></span>
+          </a>
+        </li>
+      }
+    </ul>
+ 
+    <a
+      href="#contacto"
+      data-testid="nav-cta-hablemos"
+      (click)="go($event, '#contacto')"
+      class="border-2 border-[#C6FF00] bg-[#C6FF00] px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-black transition-colors duration-300 hover:bg-transparent hover:text-[#C6FF00]"
+    >
+      Hablemos
+    </a>
+  </nav>
+ 
+  <!-- Barra de progreso de scroll -->
+  <div class="h-[2px] w-full bg-white/10">
+    <div
+      class="scroll-progress-bar h-full w-full origin-left scale-x-0 bg-[#C6FF00]"
+    ></div>
+  </div>
+</header>

@@ -1,0 +1,69 @@
+<section id="top" class="relative flex min-h-screen flex-col justify-center overflow-hidden px-5 pt-28 md:px-10">
+    <!-- Gradiente verde que sigue al mouse -->
+    <div class="hero-mouse-glow pointer-events-none absolute h-[40rem] w-[40rem] rounded-full bg-[#C6FF00]/25 blur-[140px]"
+        aria-hidden="true"></div>
+
+
+    <!-- Fade hacia abajo: suaviza el corte del gradiente contra el Marquee -->
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-black md:h-72"
+        aria-hidden="true"></div>
+
+    <p class="pointer-events-none absolute right-4 top-1/2 hidden origin-right -translate-y-1/2 rotate-90 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.5em] text-white/50 lg:block"
+        data-testid="hero-vertical-label">
+        Agencia creativa — Marketing · Diseño · Web
+    </p>
+
+    <!-- Sticker circular giratorio con la Ø en el centro -->
+    <div class="absolute right-10 top-[24%] hidden md:block lg:right-24">
+        <div class="animate-spin-slow relative h-28 w-28 md:h-40 md:w-40" data-testid="hero-sticker">
+            <svg viewBox="0 0 200 200" class="h-full w-full">
+                <defs>
+                    <path id="circlePath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+                </defs>
+                <circle cx="100" cy="100" r="98" fill="#C6FF00" />
+                <text fill="#000" font-size="19.5" font-weight="800" letter-spacing="3.5" class="font-display">
+                    <textPath href="#circlePath">FILO STUDIO • AGENCIA CREATIVA •</textPath>
+                </text>
+                <text x="100" y="118" text-anchor="middle" font-size="56" font-weight="800" fill="#000"
+                    class="font-display">
+                    Ø
+                </text>
+            </svg>
+        </div>
+    </div>
+
+    <div class="relative z-10">
+        <p class="hero-eyebrow mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.4em] text-[#C6FF00]"
+            data-testid="hero-eyebrow">
+            <span class="inline-block h-2 w-2 bg-[#C6FF00]"></span>
+            Filo Studio — Agencia creativa
+        </p>
+
+        <h1 class="font-display font-extrabold uppercase leading-[0.85] tracking-tighter">
+            <app-masked-line [onLoad]="true" [delay]="0.35">
+                <span class="block text-[clamp(2.4rem,10.5vw,13rem)] text-white">Creamos</span>
+            </app-masked-line>
+            <app-masked-line [onLoad]="true" [delay]="0.5">
+                <span class="relative block w-fit text-[clamp(2.4rem,10.5vw,13rem)] text-[#C6FF00]">
+                    Ruido
+                </span>
+            </app-masked-line>
+            <app-masked-line [onLoad]="true" [delay]="0.65">
+                <span class="text-stroke-white block text-[clamp(2.4rem,10.5vw,13rem)]">Digital</span>
+            </app-masked-line>
+        </h1>
+
+        <div class="mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-end md:justify-between">
+            <p class="hero-subcopy max-w-md text-base text-neutral-400 md:text-lg" data-testid="hero-subcopy">
+                Marketing que se escucha, diseño gráfico que se siente y desarrollo
+                web que funciona. Hacemos marcas imposibles de ignorar.
+            </p>
+            <a href="#servicios" data-testid="hero-scroll-cta" (click)="goToServices($event)"
+                class="hero-cta group flex w-fit items-center gap-3 border-2 border-white px-6 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:border-[#C6FF00] hover:bg-[#C6FF00] hover:text-black">
+                Ver servicios
+                <svg lucideArrowDown [size]="16" [strokeWidth]="2"
+                    class="animate-bounce transition-transform duration-300 group-hover:animate-none group-hover:translate-y-0.5"></svg>
+            </a>
+        </div>
+    </div>
+</section>

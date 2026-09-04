@@ -1,0 +1,37 @@
+<section id="testimonios" class="relative px-5 py-16 md:px-10 md:py-24" data-testid="testimonials-section">
+    <div class="mb-16 md:mb-24">
+        <p class="mb-4 text-xs font-bold uppercase tracking-[0.4em] text-[#C6FF00]" data-testid="testimonials-eyebrow">
+            Testimonios
+        </p>
+        <h2
+            class="font-display text-[clamp(2.1rem,8.5vw,7rem)] font-extrabold uppercase leading-[0.9] tracking-tighter">
+            <span class="text-stroke-white">Lo que dicen</span>
+            <br />
+            de nosotros
+        </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+        @for (t of testimonials; track t.name) {
+        <figure [attr.data-testid]="t.testId"
+            class="testimonial-card group relative flex flex-col justify-between border border-white/15 p-7 transition-colors duration-500 hover:border-[#C6FF00] md:p-12">
+            <svg lucideQuote [size]="40" class="mb-8 fill-[#C6FF00] text-[#C6FF00] md:size-14"></svg>
+            <blockquote class="font-display text-xl font-bold leading-snug text-white md:text-3xl">
+                "{{ t.quote }}"
+            </blockquote>
+            <figcaption class="mt-10 flex items-center gap-4">
+                <img [src]="t.img" [alt]="t.name" loading="lazy"
+                    class="h-14 w-14 border-2 border-[#C6FF00] object-cover grayscale transition-all duration-500 group-hover:grayscale-0 md:h-16 md:w-16" />
+                <div>
+                    <p class="font-display text-sm font-extrabold uppercase tracking-wide text-white md:text-base">
+                        {{ t.name }}
+                    </p>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C6FF00] md:text-xs">
+                        {{ t.role }}
+                    </p>
+                </div>
+            </figcaption>
+        </figure>
+        }
+    </div>
+</section>

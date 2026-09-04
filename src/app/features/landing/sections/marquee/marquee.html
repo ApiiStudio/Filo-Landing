@@ -1,0 +1,20 @@
+<section class="relative overflow-hidden py-16 md:py-24" data-testid="marquee-section" aria-hidden="true">
+    @for (row of rows; track row.wrapperClass; let rowIndex = $index) {
+    <div [class]="row.wrapperClass">
+        <div [class]="'overflow-hidden flex ' + row.rowClass">
+            <div class="marquee-track flex w-max items-center will-change-transform">
+                @for (copy of [0, 1]; track copy) {
+                <div class="flex w-max items-center">
+                    @for (item of loopItems; track $index) {
+                    <span [class]="'flex items-center gap-6 pr-6 ' + row.itemClass">
+                        <span class="whitespace-nowrap">{{ item }}</span>
+                        <svg lucideAsterisk [strokeWidth]="3" [class]="row.iconClass"></svg>
+                    </span>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    }
+</section>

@@ -1,3 +1,130 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
 
-@import 'tailwindcss';
+@theme {
+    --font-display: "Syne", sans-serif;
+    --font-sans: "DM Sans", sans-serif;
+    --color-lime: #c6ff00;
+}
+
+html {
+    scroll-behavior: auto;
+    overflow-x: clip;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+body {
+    margin: 0;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+.font-display {
+    font-family: var(--font-display);
+}
+
+::selection {
+    background: #c6ff00;
+    color: #000000;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c6ff00;
+    border: 2px solid #000000;
+}
+
+.text-stroke-white {
+    -webkit-text-stroke: 2px #ffffff;
+    color: transparent;
+}
+
+.text-stroke-lime {
+    -webkit-text-stroke: 2px #c6ff00;
+    color: transparent;
+}
+
+.text-stroke-black {
+    -webkit-text-stroke: 2px #000000;
+    color: transparent;
+}
+
+@media (max-width: 768px) {
+
+    .text-stroke-white,
+    .text-stroke-lime,
+    .text-stroke-black {
+        -webkit-text-stroke-width: 1.2px;
+    }
+}
+
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes marquee-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee-scroll 28s linear infinite;
+}
+
+.animate-marquee-reverse {
+    animation: marquee-scroll 36s linear infinite reverse;
+}
+
+@keyframes spin-slow {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spin-slow 16s linear infinite;
+}
+
+@keyframes float-y {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
+.animate-float {
+    animation: float-y 5s ease-in-out infinite;
+}
