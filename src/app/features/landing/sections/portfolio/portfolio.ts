@@ -32,7 +32,7 @@ interface Project {
 export class Portfolio implements AfterViewInit, OnDestroy {
   readonly projects: Project[] = [
     {
-      slug: 'vandal-coffe',
+      slug: 'vandal-coffee',
       name: 'Vandal Coffee',
       tags: 'Branding / Packaging',
       img: '/portfolio/ImageToStl.com_photo-1534670007418-fbb7f6cf32c3.avif',
