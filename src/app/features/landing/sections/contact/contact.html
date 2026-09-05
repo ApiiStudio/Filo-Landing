@@ -10,132 +10,184 @@
             <span class="block text-[clamp(1.8rem,8.5vw,10rem)]">Hablemos</span>
         </app-masked-line>
     </h2>
-
-    <!-- Formulario -->
-    <form [formGroup]="form" (ngSubmit)="submit()"
-        class="contact-form mt-14 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2"
-        data-testid="contact-form">
-        <!-- Nombre -->
-        <div class="flex flex-col">
-            <label for="name" class="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">Nombre</label>
-            <input id="name" type="text" formControlName="name" placeholder="Tu nombre" data-testid="contact-input-name"
-                class="border-b-2 border-black bg-transparent py-2 font-display text-xl font-bold uppercase tracking-tight text-black placeholder:text-black/40 focus:outline-none focus:border-b-4" />
-            @if (f.name.invalid && f.name.touched) {
-            <span class="mt-2 text-xs font-bold text-black/70">Ingresá tu nombre (mínimo 2 caracteres)</span>
-            }
-        </div>
-
-        <!-- Email -->
-        <div class="flex flex-col">
-            <label for="email" class="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">Email</label>
-            <input id="email" type="email" formControlName="email" placeholder="tu@email.com"
-                data-testid="contact-input-email"
-                class="border-b-2 border-black bg-transparent py-2 font-display text-xl font-bold uppercase tracking-tight text-black placeholder:text-black/40 focus:outline-none focus:border-b-4" />
-            @if (f.email.invalid && f.email.touched) {
-            <span class="mt-2 text-xs font-bold text-black/70">Ingresá un email válido</span>
-            }
-        </div>
-
-        <!-- Tipo de proyecto -->
-        <div class="flex flex-col md:col-span-2">
-            <label class="mb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">¿Qué necesitás?</label>
-            <div class="flex flex-wrap gap-3" data-testid="contact-project-type">
-                @for (type of projectTypes; track type) {
-                <label
-                    class="group relative cursor-pointer overflow-hidden border-2 border-black px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">
-                    <input type="radio" name="projectType" formControlName="projectType" [value]="type"
-                        class="peer sr-only" />
-                    <span
-                        class="project-type-overlay pointer-events-none absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] peer-checked:scale-x-100"></span>
-                    <span class="relative z-10 text-black transition-colors duration-300 peer-checked:text-[#C6FF00]">
-                        {{ type }}
-                    </span>
-                </label>
+    <div class="mt-14 grid max-w-6x1 grid-cols-1 gap-12 md:grid-cols-[1.3fr_1fr]">
+        <!-- Formulario -->
+        <form [formGroup]="form" (ngSubmit)="submit()"
+            class="contact-form mt-14 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2"
+            data-testid="contact-form">
+            <!-- Nombre -->
+            <div class="flex flex-col">
+                <label for="name"
+                    class="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">Nombre</label>
+                <input id="name" type="text" formControlName="name" placeholder="Tu nombre"
+                    data-testid="contact-input-name"
+                    class="border-b-2 border-black bg-transparent py-2 font-display text-xl font-bold uppercase tracking-tight text-black placeholder:text-black/40 focus:outline-none focus:border-b-4" />
+                @if (f.name.invalid && f.name.touched) {
+                <span class="mt-2 text-xs font-bold text-black/70">Ingresá tu nombre (mínimo 2 caracteres)</span>
                 }
             </div>
-            @if (f.projectType.invalid && f.projectType.touched) {
-            <span class="mt-2 text-xs font-bold text-black/70">Elegí una opción</span>
-            }
-        </div>
 
-        <!-- Mensaje -->
-        <div class="flex flex-col md:col-span-2">
-            <label for="message" class="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">Contanos tu
-                idea</label>
-            <textarea id="message" rows="4" formControlName="message" placeholder="Quiero romper el molde con..."
-                data-testid="contact-input-message"
-                class="resize-none border-b-2 border-black bg-transparent py-2 font-display text-xl font-bold uppercase tracking-tight text-black placeholder:text-black/40 focus:outline-none focus:border-b-4"></textarea>
-            @if (f.message.invalid && f.message.touched) {
-            <span class="mt-2 text-xs font-bold text-black/70">Contanos un poco más (mínimo 10 caracteres)</span>
-            }
-        </div>
+            <!-- Email -->
+            <div class="flex flex-col">
+                <label for="email"
+                    class="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">Email</label>
+                <input id="email" type="email" formControlName="email" placeholder="tu@email.com"
+                    data-testid="contact-input-email"
+                    class="border-b-2 border-black bg-transparent py-2 font-display text-xl font-bold uppercase tracking-tight text-black placeholder:text-black/40 focus:outline-none focus:border-b-4" />
+                @if (f.email.invalid && f.email.touched) {
+                <span class="mt-2 text-xs font-bold text-black/70">Ingresá un email válido</span>
+                }
+            </div>
 
-        <!-- Submit + contacto alternativo, todo en la misma fila -->
-        <div
-            class="flex flex-col gap-8 border-t-2 border-black/20 pt-10 md:col-span-2 md:flex-row md:items-center md:justify-between">
-            <button type="submit" [disabled]="sending" data-testid="contact-submit"
-                class="group flex w-fit items-center gap-4 border-2 border-black bg-black px-6 py-4 font-display text-base font-extrabold uppercase tracking-tight text-[#C6FF00] transition-colors duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60 md:px-8 md:text-xl">
-                {{ sending ? 'Enviando...' : 'Enviar mensaje' }}
-                <svg lucideArrowUpRight [size]="100" [strokeWidth]="2.5"
-                    class="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-14"></svg>
-            </button>
+            <!-- Tipo de proyecto -->
+            <div class="flex flex-col md:col-span-2">
+                <label class="mb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">¿Qué
+                    necesitás?</label>
+                <div class="flex flex-wrap gap-3" data-testid="contact-project-type">
+                    @for (type of projectTypes; track type) {
+                    <label
+                        class="group relative cursor-pointer overflow-hidden border-2 border-black px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">
+                        <input type="radio" name="projectType" formControlName="projectType" [value]="type"
+                            class="peer sr-only" />
+                        <span
+                            class="project-type-overlay pointer-events-none absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] peer-checked:scale-x-100"></span>
+                        <span
+                            class="relative z-10 text-black transition-colors duration-300 peer-checked:text-[#C6FF00]">
+                            {{ type }}
+                        </span>
+                    </label>
+                    }
+                </div>
+                @if (f.projectType.invalid && f.projectType.touched) {
+                <span class="mt-2 text-xs font-bold text-black/70">Elegí una opción</span>
+                }
+            </div>
 
-            <a href="mailto:hola@filo.studio" data-testid="contact-email-button"
-                class="group flex w-fit max-w-full items-center gap-4 break-all border-2 border-black px-6 py-4 font-display text-base font-extrabold uppercase tracking-tight text-black transition-colors duration-300 hover:bg-black hover:text-[#C6FF00] md:px-8 md:text-xl">
-                hola&#64;filo.studio
-                <svg lucideArrowUpRight [size]="48" [strokeWidth]="2.5"
-                    class="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-14"></svg>
-            </a>
+            <!-- Mensaje -->
+            <div class="flex flex-col md:col-span-2">
+                <label for="message"
+                    class="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-black/70">Contanos tu
+                    idea</label>
+                <textarea id="message" rows="4" formControlName="message" placeholder="Quiero romper el molde con..."
+                    data-testid="contact-input-message"
+                    class="resize-none border-b-2 border-black bg-transparent py-2 font-display text-xl font-bold uppercase tracking-tight text-black placeholder:text-black/40 focus:outline-none focus:border-b-4"></textarea>
+                @if (f.message.invalid && f.message.touched) {
+                <span class="mt-2 text-xs font-bold text-black/70">Contanos un poco más (mínimo 10 caracteres)</span>
+                }
+            </div>
 
-            <div class="flex gap-3 md:ml-auto">
-                @for (s of socials; track s.label) {
-                <a href="#contacto" (click)="$event.preventDefault()" [attr.aria-label]="s.label"
-                    [attr.data-testid]="s.testId"
-                    class="flex h-11 w-11 items-center justify-center border-2 border-black text-black transition-colors duration-300 hover:bg-black hover:text-[#C6FF00] md:h-12 md:w-12">
-                    @switch (s.label) {
+            <!-- Submit + contacto alternativo, todo en la misma fila -->
+            <div
+                class="mt-14 flex flex-col gap-8 border-t-2 border-black/20 pt-10 md:flex-row md:items-center md:justify-between">
+                <button type="submit" [disabled]="sending" data-testid="contact-submit"
+                    class="group flex w-fit items-center gap-4 border-2 border-black bg-black px-6 py-4 font-display text-base font-extrabold uppercase tracking-tight text-[#C6FF00] transition-colors duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60 md:px-8 md:text-xl">
+                    {{ sending ? 'Enviando...' : 'Enviar mensaje' }}
+                    <svg lucideArrowUpRight [size]="100" [strokeWidth]="2.5"
+                        class="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-14"></svg>
+                </button>
+
+                <a href="mailto:hola@filo.studio" data-testid="contact-email-button"
+                    class="group flex w-fit max-w-full items-center gap-4 break-all border-2 border-black px-6 py-4 font-display text-base font-extrabold uppercase tracking-tight text-black transition-colors duration-300 hover:bg-black hover:text-[#C6FF00] md:px-8 md:text-xl">
+                    hola&#64;filo.studio
+                    <svg lucideArrowUpRight [size]="48" [strokeWidth]="2.5"
+                        class="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 md:size-14"></svg>
+                </a>
+
+                <div class="flex gap-3 md:ml-auto">
+                    @for (s of socials; track s.label) {
+                    <a href="#contacto" (click)="$event.preventDefault()" [attr.aria-label]="s.label"
+                        [attr.data-testid]="s.testId"
+                        class="flex h-11 w-11 items-center justify-center border-2 border-black text-black transition-colors duration-300 hover:bg-black hover:text-[#C6FF00] md:h-12 md:w-12">
+                        @switch (s.label) {
                         @case ('Instagram') {
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                         </svg>
                         }
                         @case ('LinkedIn') {
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                             <rect x="2" y="9" width="4" height="12" />
                             <circle cx="4" cy="4" r="2" />
                         </svg>
                         }
                         @case ('Dribbble') {
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <circle cx="12" cy="12" r="10" />
                             <path
                                 d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72M2.5 9.5c9.5-3 15.5-2 19.5.5M2 15c6-1.5 12-3 19.5-1" />
                         </svg>
                         }
-                    } 
-                </a>}
+                        }
+                    </a>}
+                </div>
+            </div>
+
+            @if (submitted) {
+            <p class="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-black/80 md:col-span-2"
+                data-testid="contact-success-message">
+                ¡Listo! Te vamos a escribir pronto.
+            </p>
+            }
+        </form>
+        <div
+            class="flex flex-col justify-between border-t-2 border-black/20 pt-10 md:border-l-2 md:border-t-0 md:pl-12 md:pt-0">
+            <div class="hidden self-end md:block">
+                <div class="animate-spin-slow-reverse relative h-32 w-32">
+                    <svg viewBox="0 0 200 200" class="h-full w-full">
+                        <defs>
+                            <path id="circlePathContact" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+                        </defs>
+                        <circle cx="100" cy="100" r="98" fill="#000" />
+                        <text fill="#C6FF00" font-size="19.5" font-weight="800" letter-spacing="3.5"
+                            class="font-display">
+                            <textPath href="#circlePathContact">FILO STUDIO • AGENCIA CREATIVA •</textPath>
+                        </text>
+                        <text x="100" y="118" text-anchor="middle" font-size="56" font-weight="800" fill="#C6FF00"
+                            class="font-display">Ø</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="mt-10 space-y-8 md:mt-0">
+                <div>
+                    <p class="mb-1 text-[10px] font-bold uppercase tracking-[0.3em] text-black/60">Disponibilidad</p>
+                    <p class="font-display text-xl font-extrabold uppercase tracking-tight">Tomando proyectos — Q1 2027
+                    </p>
+                </div>
+                <div>
+                    <p class="mb-1 text-[10px] font-bold uppercase tracking-[0.3em] text-black/60">Tiempo de respuesta
+                    </p>
+                    <p class="font-display text-xl font-extrabold uppercase tracking-tight">Menos de 24hs</p>
+                </div>
+                <div>
+                    <p class="mb-1 text-[10px] font-bold uppercase tracking-[0.3em] text-black/60">¿Preferís hablar
+                        directo?</p>
+                    <a href="https://wa.me/5490000000000" target="_blank"
+                        class="group flex items-center gap-2 font-display text-xl font-extrabold uppercase tracking-tight underline decoration-2 underline-offset-4">
+                        WhatsApp
+                        <svg lucideArrowUpRight [size]="18" [strokeWidth]="2.5"
+                            class="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></svg>
+                    </a>
+                </div>
             </div>
         </div>
-
-        @if (submitted) {
-        <p class="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-black/80 md:col-span-2"
-            data-testid="contact-success-message">
-            ¡Listo! Te vamos a escribir pronto.
-        </p>
-        }
-    </form>
+    </div>
 </section>
 
 <footer class="border-t border-white/15 bg-black px-5 py-10 md:px-10" data-testid="footer">
     <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <img [src]="logoUrl" alt="FILO STUDIO" class="h-6 w-auto" data-testid="footer-logo" />
         <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 md:text-xs">
-            Marketing · Diseño Gráfico · Desarrollo Web
+            developed by <a style="color:#c6ff00" target="_blank" href="https://vicensaca.site/home">"Vicensaca"</a>
         </p>
         <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 md:text-xs" data-testid="footer-copy">
-            © 2026 Filo Studio — Hecho con ruido
+            © 2026 Filo Studio
         </p>
     </div>
 </footer>

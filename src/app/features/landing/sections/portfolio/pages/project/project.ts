@@ -6,7 +6,8 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, Scroll } from '@angular/router';
+import { LucideAArrowUp, LucideArrowLeft, LucideArrowUpRight, LucideQuote } from '@lucide/angular';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -53,13 +54,16 @@ interface ProjectData {
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, LucideArrowLeft, LucideArrowUpRight, LucideQuote],
   templateUrl: './project.html',
   styleUrl: './project.css',
 })
 export class Project implements OnInit, AfterViewInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+
+  readonly logoUrl =
+    '/filo-logo.png';
 
   // Importante:
   // ElementRef se inyecta sin genérico y después lo tipamos.
@@ -69,6 +73,22 @@ export class Project implements OnInit, AfterViewInit, OnDestroy {
   project: ProjectData | null = null;
 
   private scrollTriggers: ScrollTrigger[] = [];
+  private progressTrigger: ScrollTrigger | null = null;
+
+  private readonly serviceAnchors: Record<string, string> = {
+    'Estrategia de marca': 'estrategia',
+    'Identidad visual': 'identidad',
+    'Diseño gráfico': 'diseno',
+    'Packaging': 'diseno',
+    'Contenido digital': 'diseno',
+    'SEO': 'seo',
+  };
+
+  goToService(service: string): void {
+    const id = this.serviceAnchors[service];
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
@@ -78,6 +98,8 @@ export class Project implements OnInit, AfterViewInit, OnDestroy {
     if (!this.project) {
       this.router.navigate(['/']);
     }
+
+    window.scrollTo(0, 0);
   }
 
   ngAfterViewInit(): void {
@@ -87,6 +109,20 @@ export class Project implements OnInit, AfterViewInit, OnDestroy {
 
     requestAnimationFrame(() => {
       this.initAnimations();
+      const bar = this.host.nativeElement.querySelector(
+        '.scroll-progress-bar'
+      ) as HTMLElement | null;
+
+      if (bar) {
+        this.progressTrigger = ScrollTrigger.create({
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: (self) => {
+            gsap.set(bar, { scaleX: self.progress });
+          },
+        });
+      }
     });
   }
 
@@ -185,26 +221,62 @@ export class Project implements OnInit, AfterViewInit, OnDestroy {
   private initAnimations(): void {
     const root = this.host.nativeElement;
 
-    const elements =
-      root.querySelectorAll<HTMLElement>('[data-reveal]');
+    const elements = root.querySelectorAll<HTMLElement>('[data-reveal]');
 
     elements.forEach((element: HTMLElement) => {
-      gsap.set(element, {
-        opacity: 0,
-        y: 40,
-      });
+      gsap.set(element, { opacity: 0, y: 40 });
 
       const trigger = ScrollTrigger.create({
         trigger: element,
         start: 'top 88%',
         once: true,
-
         onEnter: () => {
           gsap.to(element, {
             opacity: 1,
             y: 0,
             duration: 0.8,
             ease: 'power3.out',
+          });
+        },
+      });
+      this.scrollTriggers.push(trigger);
+    });
+    this.animateResultCounters();
+  }
+
+  private animateResultCounters(): void {
+    const root = this.host.nativeElement;
+    const valueEls = Array.from(
+      root.querySelectorAll<HTMLElement>('.result-value')
+    );
+
+    valueEls.forEach((el, i) => {
+      const raw = this.project?.results[i]?.value ?? '';
+      if (!raw) return;
+
+      const match = raw.match(/^([^\d]*)([\d.,]+)(.*)$/);
+      if (!match) return;
+
+      const [, prefix, numStr, suffix] = match;
+      const hasDecimal = numStr.includes('.') || numStr.includes(',');
+      const target = parseFloat(numStr.replace(',', '.'));
+
+      const trigger = ScrollTrigger.create({
+        trigger: el,
+        start: 'top 88%',
+        once: true,
+        onEnter: () => {
+          const counter = { value: 0 };
+          gsap.to(counter, {
+            value: target,
+            duration: 1.6,
+            ease: 'power2.out',
+            onUpdate: () => {
+              const current = hasDecimal
+                ? counter.value.toFixed(1)
+                : Math.round(counter.value).toString();
+              el.textContent = prefix + current + suffix;
+            },
           });
         },
       });
@@ -219,5 +291,6 @@ export class Project implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.scrollTriggers = [];
+    this.progressTrigger?.kill();
   }
 }

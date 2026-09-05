@@ -17,7 +17,7 @@ interface Social {
   styleUrl: './contact.css',
 })
 export class Contact implements AfterViewInit, OnDestroy{
-  readonly logoUrl =     'https://customer-assets-rejwkqb3.emergentagent.net/job_7bf59ddd-3f9a-463f-9a53-907b85c5ce83/artifacts/ay1lzhtr_Filo%20Logo.png';
+  readonly logoUrl =     '/filo-logo.png';
 
 readonly socials = [
   { label: 'Instagram', testId: 'social-instagram' },

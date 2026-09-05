@@ -142,6 +142,9 @@ body {
 .animate-spin-slow {
     animation: spin-slow 16s linear infinite;
 }
+.animate-spin-slow-reverse {
+    animation: spin-slow 16s linear infinite reverse;
+}
 
 @keyframes float-y {
 

@@ -28,6 +28,7 @@ interface Project {
   standalone: true,
   imports: [LucideArrowUpRight, RouterLink],
   templateUrl: './portfolio.html',
+  styleUrl: './portfolio.css'
 })
 export class Portfolio implements AfterViewInit, OnDestroy {
   readonly projects: Project[] = [

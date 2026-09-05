@@ -17,7 +17,7 @@ interface NavLink {
   styleUrl: './nav.css',
 })
 export class Nav {
-  readonly logoUrl = 'https://customer-assets-rejwkqb3.emergentagent.net/job_7bf59ddd-3f9a-463f-9a53-907b85c5ce83/artifacts/ay1lzhtr_Filo%20Logo.png';
+  readonly logoUrl = '/filo-logo.png';
 
   readonly links: NavLink[] = [
     { label: 'Servicios', href:'#servicios', testId:'nav-link-servicios'},
