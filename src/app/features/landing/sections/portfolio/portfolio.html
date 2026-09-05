@@ -16,7 +16,7 @@
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
         @for (p of projects; track p.name; let i = $index) {
-        <a [routerLink]="['/portfolio', p.slug]" (click)="goToContact($event)" [attr.data-testid]="p.testId" [class]="
+        <a [routerLink]="['/portfolio', p.slug]" [attr.data-testid]="p.testId" [class]="
           'project-card group relative block overflow-hidden border border-white/15 transition-colors duration-500 hover:border-[#C6FF00] ' +
           p.span +
           ' ' + p.ratio + ' will-change-transform'

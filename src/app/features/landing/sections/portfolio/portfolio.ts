@@ -32,7 +32,7 @@ interface Project {
 export class Portfolio implements AfterViewInit, OnDestroy {
   readonly projects: Project[] = [
     {
-      slug: 'Vandal Coffe',
+      slug: 'vandal-coffe',
       name: 'Vandal Coffee',
       tags: 'Branding / Packaging',
       img: '/portfolio/ImageToStl.com_photo-1534670007418-fbb7f6cf32c3.avif',
@@ -41,7 +41,7 @@ export class Portfolio implements AfterViewInit, OnDestroy {
       testId: 'project-vandal',
     },
     {
-      slug: 'Neón Records',
+      slug: 'Neón-Records',
       name: 'Neón Records',
       tags: 'Diseño Gráfico / Social',
       img: '/portfolio/fx4q1-4noxh.avif',
@@ -50,7 +50,7 @@ export class Portfolio implements AfterViewInit, OnDestroy {
       testId: 'project-neon',
     },
     {
-      slug: 'Distrito Skate',
+      slug: 'Distrito-Skate',
       name: 'Distrito Skate',
       tags: 'E-commerce / Web',
       img: '/portfolio/ImageToStl.com_photo-1490013616775-3ca8865fb129.avif',
@@ -59,7 +59,7 @@ export class Portfolio implements AfterViewInit, OnDestroy {
       testId: 'project-distrito',
     },
     {
-      slug: 'Acid Studio',
+      slug: 'Acid-Studio',
       name: 'Acid Studio',
       tags: 'Campaña 360 / Marketing',
       img: '/portfolio/pexels-photo-17029155.avif',
