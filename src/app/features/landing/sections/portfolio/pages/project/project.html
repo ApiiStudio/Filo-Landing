@@ -1,0 +1,287 @@
+@if (project) {
+
+<main class="project-page">
+
+    <!-- NAV -->
+    <header class="project-nav">
+        <a routerLink="/" class="project-logo">
+            FILO<span>.</span>
+        </a>
+
+        <a routerLink="/#portfolio" class="project-back">
+            ← Volver al trabajo
+        </a>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="project-hero">
+
+        <div class="project-meta">
+
+            <span>
+                {{ project.number }} / 04
+            </span>
+
+            <span>
+                {{ project.year }}
+            </span>
+
+        </div>
+
+
+        <div class="project-title-wrap">
+
+            <p class="project-eyebrow">
+                {{ project.category }}
+            </p>
+
+            <h1>
+                {{ project.name }}
+            </h1>
+
+        </div>
+
+
+        <div class="project-hero-image">
+
+            <img [src]="project.heroImage" [alt]="project.name" fetchpriority="high" decoding="async" />
+
+        </div>
+
+    </section>
+
+
+    <!-- INTRO -->
+    <section class="project-intro" data-reveal>
+
+        <p class="section-label">
+            El proyecto
+        </p>
+
+        <h2>
+            {{ project.intro }}
+        </h2>
+
+    </section>
+
+
+    <!-- SERVICES -->
+    <section class="project-services" data-reveal>
+
+        <div class="section-label">
+            Servicios
+        </div>
+
+        <div class="services-list">
+
+            @for (service of project.services; track service) {
+
+            <div class="service-item">
+
+                <span>
+                    {{ ($index + 1).toString().padStart(2, '0') }}
+                </span>
+
+                <strong>
+                    {{ service }}
+                </strong>
+
+                <span>↗</span>
+
+            </div>
+
+            }
+
+        </div>
+
+    </section>
+
+
+    <!-- CHALLENGE -->
+    <section class="project-text-section" data-reveal>
+
+        <div class="section-number">
+            00
+        </div>
+
+        <div>
+
+            <p class="section-label">
+                {{ project.challenge.title }}
+            </p>
+
+            <p class="large-copy">
+                {{ project.challenge.description }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- STRATEGY -->
+    <section class="project-text-section" data-reveal>
+
+        <div class="section-number">
+            {{ project.strategy.eyebrow }}
+        </div>
+
+        <div>
+
+            <p class="section-label">
+                {{ project.strategy.title }}
+            </p>
+
+            @for (paragraph of project.strategy.paragraphs; track paragraph) {
+
+            <p class="body-copy">
+                {{ paragraph }}
+            </p>
+
+            }
+
+        </div>
+
+    </section>
+
+
+    <!-- IDENTITY -->
+    <section class="project-text-section" data-reveal>
+
+        <div class="section-number">
+            {{ project.identity.eyebrow }}
+        </div>
+
+        <div>
+
+            <p class="section-label">
+                {{ project.identity.title }}
+            </p>
+
+            @for (paragraph of project.identity.paragraphs; track paragraph) {
+
+            <p class="body-copy">
+                {{ paragraph }}
+            </p>
+
+            }
+
+        </div>
+
+    </section>
+
+
+    <!-- GALLERY -->
+    <section class="project-gallery">
+
+        @for (image of project.gallery; track image; let i = $index) {
+
+        <figure class="gallery-image" data-reveal>
+
+            <img [src]="image" [alt]="project.name + ' — imagen ' + (i + 1)" loading="lazy" decoding="async" />
+
+        </figure>
+
+        }
+
+    </section>
+
+
+    <!-- GRAPHIC DESIGN -->
+    <section class="project-text-section" data-reveal>
+
+        <div class="section-number">
+            {{ project.graphicDesign.eyebrow }}
+        </div>
+
+        <div>
+
+            <p class="section-label">
+                {{ project.graphicDesign.title }}
+            </p>
+
+            @for (
+            paragraph of project.graphicDesign.paragraphs;
+            track paragraph
+            ) {
+
+            <p class="body-copy">
+                {{ paragraph }}
+            </p>
+
+            }
+
+        </div>
+
+    </section>
+
+
+    <!-- SEO -->
+    <section class="project-seo" data-reveal>
+
+        <div class="section-number">
+            {{ project.seo.eyebrow }}
+        </div>
+
+        <div>
+
+            <p class="section-label">
+                {{ project.seo.title }}
+            </p>
+
+            @for (
+            paragraph of project.seo.paragraphs;
+            track paragraph
+            ) {
+
+            <p class="body-copy">
+                {{ paragraph }}
+            </p>
+
+            }
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULTS -->
+    <section class="project-results">
+
+        @for (result of project.results; track result.label) {
+
+        <div class="result" data-reveal>
+
+            <strong>
+                {{ result.value }}
+            </strong>
+
+            <span>
+                {{ result.label }}
+            </span>
+
+        </div>
+
+        }
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="project-cta">
+
+        <p>
+            ¿Tenés algo en mente?
+        </p>
+
+        <a routerLink="/#contacto">
+            Hablemos
+            <span>↗</span>
+        </a>
+
+    </section>
+
+</main>
+
+}

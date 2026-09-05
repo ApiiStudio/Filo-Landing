@@ -11,8 +11,10 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SmoothScrollService } from '../../../../core/smooth-scroll';
 import { LucideArrowUpRight } from '@lucide/angular';
+import { RouterLink } from '@angular/router';
 
 interface Project {
+  slug: string;
   name: string;
   tags: string;
   img: string;
@@ -24,39 +26,43 @@ interface Project {
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [LucideArrowUpRight],
+  imports: [LucideArrowUpRight, RouterLink],
   templateUrl: './portfolio.html',
 })
 export class Portfolio implements AfterViewInit, OnDestroy {
   readonly projects: Project[] = [
     {
+      slug: 'Vandal Coffe',
       name: 'Vandal Coffee',
       tags: 'Branding / Packaging',
-      img: 'https://images.unsplash.com/photo-1534670007418-fbb7f6cf32c3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMGFnZW5jeSUyMHBvcnRmb2xpbyUyMG1vZGVybnxlbnwwfHx8fDE3ODYxMTY1Nzd8MA&ixlib=rb-4.1.0&q=85',
+      img: '/portfolio/ImageToStl.com_photo-1534670007418-fbb7f6cf32c3.avif',
       span: 'md:col-span-7',
       ratio: 'aspect-[4/3]',
       testId: 'project-vandal',
     },
     {
+      slug: 'Neón Records',
       name: 'Neón Records',
       tags: 'Diseño Gráfico / Social',
-      img: 'https://images.unsplash.com/photo-1695634364857-cbbb46c47b59?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHw0fHxjcmVhdGl2ZSUyMGFnZW5jeSUyMHBvcnRmb2xpbyUyMG1vZGVybnxlbnwwfHx8fDE3ODYxMTY1Nzd8MA&ixlib=rb-4.1.0&q=85',
+      img: '/portfolio/fx4q1-4noxh.avif',
       span: 'md:col-span-5',
       ratio: 'aspect-[4/3] md:aspect-auto md:h-full',
       testId: 'project-neon',
     },
     {
+      slug: 'Distrito Skate',
       name: 'Distrito Skate',
       tags: 'E-commerce / Web',
-      img: 'https://images.unsplash.com/photo-1490013616775-3ca8865fb129?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwyfHxjcmVhdGl2ZSUyMGFnZW5jeSUyMHBvcnRmb2xpbyUyMG1vZGVybnxlbnwwfHx8fDE3ODYxMTY1Nzd8MA&ixlib=rb-4.1.0&q=85',
+      img: '/portfolio/ImageToStl.com_photo-1490013616775-3ca8865fb129.avif',
       span: 'md:col-span-5',
       ratio: 'aspect-[4/3] md:aspect-auto md:h-full',
       testId: 'project-distrito',
     },
     {
+      slug: 'Acid Studio',
       name: 'Acid Studio',
       tags: 'Campaña 360 / Marketing',
-      img: 'https://images.pexels.com/photos/17029155/pexels-photo-17029155.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+      img: '/portfolio/pexels-photo-17029155.avif',
       span: 'md:col-span-7',
       ratio: 'aspect-[4/3]',
       testId: 'project-acid',
@@ -68,6 +74,8 @@ export class Portfolio implements AfterViewInit, OnDestroy {
   private smoothScroll = inject(SmoothScrollService);
   private trigger: ScrollTrigger | null = null;
   private cleanupFns: Array<() => void> = [];
+  private readonly reducedMotion = isPlatformBrowser(this.platformId)
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   goToContact(event: Event): void {
     event.preventDefault();
@@ -82,59 +90,67 @@ export class Portfolio implements AfterViewInit, OnDestroy {
     );
     if (!cards.length) return;
 
-    // Reveal on scroll con stagger alternado (i % 2), igual que el original
-    gsap.set(cards, { opacity: 0, y: 80 });
+    if (this.reducedMotion) {
+      gsap.set(cards, { opacity: 1, y: 0 });
+      return;
+    }
+
+    // Use one tween for the whole collection to reduce ScrollTrigger work.
+    gsap.set(cards, { opacity: 0, y: 60 });
     this.trigger = ScrollTrigger.create({
       trigger: this.host.nativeElement,
       start: 'top 88%',
       once: true,
       onEnter: () => {
-        cards.forEach((card, i) => {
-          gsap.to(card, {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            delay: (i % 2) * 0.15,
-            ease: 'power4.out',
-          });
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: 'power3.out',
         });
       },
     });
 
-    // Tilt 3D siguiendo el mouse (solo desktop)
-    if (window.matchMedia('(min-width: 768px)').matches) {
+    // Tilt only on devices with a fine pointer; touch devices avoid this work.
+    if (window.matchMedia('(min-width: 768px) and (pointer: fine)').matches) {
       cards.forEach((card) => this.setupTilt(card));
     }
   }
 
   private setupTilt(card: HTMLElement): void {
     const rotateXTo = gsap.quickTo(card, 'rotateX', {
-      duration: 0.5,
+      duration: 0.35,
       ease: 'power3.out',
     });
     const rotateYTo = gsap.quickTo(card, 'rotateY', {
-      duration: 0.5,
+      duration: 0.35,
       ease: 'power3.out',
     });
-
-    gsap.set(card, {
-      transformPerspective: 800,
-      transformStyle: 'preserve-3d',
-    });
-
+    
     // Cacheamos el rect una sola vez al entrar (no en cada mousemove),
     // así evitamos forzar reflow del layout en cada frame.
     let rect = card.getBoundingClientRect();
+    let frame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
 
     const onEnter = () => {
       rect = card.getBoundingClientRect();
     };
 
     const onMove = (e: MouseEvent) => {
-      const px = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 a 0.5
-      const py = (e.clientY - rect.top) / rect.height - 0.5;
-      rotateYTo(px * 8);
-      rotateXTo(py * -8);
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      if (frame) return;
+
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const px = (pointerX - rect.left) / rect.width - 0.5;
+        const py = (pointerY - rect.top) / rect.height - 0.5;
+        rotateYTo(px * 6);
+        rotateXTo(py * -6);
+      });
     };
 
     const onLeave = () => {
@@ -147,6 +163,8 @@ export class Portfolio implements AfterViewInit, OnDestroy {
     card.addEventListener('mouseleave', onLeave);
 
     this.cleanupFns.push(() => {
+      if (frame) cancelAnimationFrame(frame);
+      gsap.killTweensOf(card);
       card.removeEventListener('mouseenter', onEnter);
       card.removeEventListener('mousemove', onMove);
       card.removeEventListener('mouseleave', onLeave);
