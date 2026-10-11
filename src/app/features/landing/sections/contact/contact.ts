@@ -29,6 +29,7 @@ readonly socials = [
     'Diseño Gráfico',
     'Desarrollo Web',
     'Proyecto Integral',
+    'Personalizado'
   ];
 
   private fb = inject(FormBuilder);

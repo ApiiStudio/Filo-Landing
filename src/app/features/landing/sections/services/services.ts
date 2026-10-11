@@ -24,25 +24,39 @@ export class Services implements AfterViewInit, OnDestroy {
   readonly services: Service[] = [
     {
       num: '01',
-      title: 'Marketing',
-      desc: 'Estrategia digital, redes sociales, SEO y paid media. Convertimos atención en resultados medibles.',
+      title: 'Gestión Integral de Comunicación',
+      desc: 'Estrategia de contenidos, producción, diseño, edición, publicación, community y análisis.',
       tags: ['Estrategia', 'Social Media', 'SEO / SEM', 'Ads'],
       testId: 'service-marketing',
     },
     {
       num: '02',
-      title: 'Diseño Gráfico',
-      desc: 'Identidades visuales con carácter. Branding, editorial y piezas que gritan sin pedir permiso.',
+      title: 'Estrategia & Consultoría',
+      desc: 'Disección de marca, posicionamiento, comunicación, auditorías, planes estratégicos y acompañamiento.',
       tags: ['Branding', 'Identidad', 'Editorial', 'Packaging'],
-      testId: 'service-diseno',
+      testId: 'service-estrategia',
     },
     {
       num: '03',
-      title: 'Desarrollo Web',
-      desc: 'Sitios y e-commerce rápidos, accesibles y con movimiento. Código limpio, experiencias salvajes.',
+      title: 'Identidad & Diseño',
+      desc: 'Branding, sistemas visuales, diseño gráfico, piezas digitales y aplicaciones de marca.',
       tags: ['Webs', 'E-commerce', 'UX/UI', 'Motion'],
-      testId: 'service-web',
+      testId: 'service-diseno',
     },
+    {
+      num: '04',
+      title: 'Paid Media',
+      desc: 'Planificación de campañas, Meta Ads/Google Ads, segmentación, testing, optimización y reporting.',
+      tags: ['Paid Media'],
+      testId: 'paid-media'
+    },
+    {
+      num: '05',
+      title: 'Diseño & Desarrollo Web',
+      desc: 'Landing pages, webs insitucionales y experiencias digitales alineadas con la identidad.',
+      tags: ['Webs', 'E-commerce', 'UX/UI'],
+      testId: 'service-web'
+    }
   ];
   private platformId = inject(PLATFORM_ID);
   private host: ElementRef<HTMLElement> = inject(ElementRef);

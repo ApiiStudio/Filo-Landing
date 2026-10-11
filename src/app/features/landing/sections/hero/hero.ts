@@ -32,7 +32,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   goToServices(event: Event): void {
     event.preventDefault();
-    this.smoothScroll.scrollTo('#servicios', { duration: 1.4 });
+    this.smoothScroll.scrollTo('#contacto', { duration: 1.4 });
   }
 
   ngAfterViewInit(): void {

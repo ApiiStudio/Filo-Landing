@@ -12,7 +12,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MaskedLineComponent } from '../../../../shared/masked-line/masked-line';
 
 interface Stat {
-  value: string;
+  value: (string);
   label: string;
   testId: string;
 }
@@ -25,8 +25,8 @@ interface Stat {
 })
 export class Manifesto implements AfterViewInit, OnDestroy {
   readonly stats: Stat[] = [
-    { value: '+120', label: 'Proyectos lanzados', testId: 'stat-proyectos' },
-    { value: '08', label: 'Años de ruido', testId: 'stat-anos' },
+    { value: '+10', label: 'Proyectos lanzados', testId: 'stat-proyectos' },
+    { value: '01', label: 'Año afilando', testId: 'stat-anos' },
     { value: '15', label: 'Premios creativos', testId: 'stat-premios' },
     { value: '04', label: 'Locos por el diseño', testId: 'stat-equipo' },
   ];
