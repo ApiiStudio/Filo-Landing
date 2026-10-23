@@ -81,7 +81,7 @@
 
         <!-- Panel derecho: sticker + info, como una sola unidad conectada -->
         <div
-            class="flex flex-col items-start gap-6 border-t-2 border-black/20 pt-10 md:border-l-2 md:border-t-0 md:pl-12 md:pt-0">
+            class="flex flex-col items-start gap-6 border-t-2 border-black/20 pt-10 md:border-l-2 md:border-t-0 md:pl-12 md:pt-0 order-3 flex flex-col items-start gap-6 border-t-2 md:order-none">
             <div class="animate-spin-slow-reverse relative h-24 w-24 md:h-28 md:w-28">
                 <svg viewBox="0 0 200 200" class="h-full w-full">
                     <defs>
@@ -122,7 +122,7 @@
 
         <!-- Submit + contacto alternativo: ahora sí ocupa el ancho completo real -->
         <div
-            class="flex flex-col gap-8 border-t-2 border-black/20 pt-10 md:col-span-2 md:flex-row md:items-center md:justify-between">
+            class="order-2 flex flex-col gap-8 border-t-2 border-black/20 pt-10 md:order-none md:col-span-2 md:flex-row md:items-center md:justify-between">
             <button type="submit" form="contactForm" [disabled]="sending" data-testid="contact-submit"
                 class="group flex w-fit items-center gap-4 border-2 border-black bg-black px-6 py-4 font-display text-base font-extrabold uppercase tracking-tight text-[#C6FF00] transition-colors duration-300 hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60 md:px-8 md:text-xl">
                 {{ sending ? 'Enviando...' : 'Enviar mensaje' }}
@@ -170,7 +170,7 @@
         </div>
 
         @if (submitted) {
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-black/80 md:col-span-2"
+        <p class="order-2 text-xs font-bold uppercase tracking-[0.2em] text-black/80 md:col-span-2 md:order-none text-xs"
             data-testid="contact-success-message">
             ¡Listo! Te vamos a escribir pronto.
         </p>

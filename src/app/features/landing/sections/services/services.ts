@@ -1,94 +1,93 @@
+import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { LucideArrowUpRight, LucidePlus } from '@lucide/angular';
 import { MaskedLineComponent } from '../../../../shared/masked-line/masked-line';
-import { LucideArrowUpRight } from '@lucide/angular';
+import { SmoothScrollService } from '../../../../core/smooth-scroll';
 
-interface Service {
+interface Pillar {
   num: string;
   title: string;
   desc: string;
-  tags: string[];
-  testId: string;
 }
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [MaskedLineComponent, LucideArrowUpRight],
+  imports: [MaskedLineComponent, LucideArrowUpRight, LucidePlus],
   templateUrl: './services.html',
-  styleUrl: './services.css',
 })
 export class Services implements AfterViewInit, OnDestroy {
-  readonly services: Service[] = [
+  readonly problems = [
+    'Conocés el valor de tu producto y terminás compitiendo por precio.',
+    'Estás improvisando con tu comunicación y no hay una idea que conecte todo.',
+    'Querés atraer otro perfil de cliente, expandirte o hacer que tu presencia digital refleje mejor lo que ofrecés.',
+  ];
+
+  readonly pillars: Pillar[] = [
     {
       num: '01',
-      title: 'Gestión Integral de Comunicación',
-      desc: 'Estrategia de contenidos, producción, diseño, edición, publicación, community y análisis.',
-      tags: ['Estrategia', 'Social Media', 'SEO / SEM', 'Ads'],
-      testId: 'service-marketing',
+      title: 'Una posición propia.',
+      desc: 'Definimos a quién hablarle, qué te hace diferente y por qué elegirte.',
     },
     {
       num: '02',
-      title: 'Estrategia & Consultoría',
-      desc: 'Disección de marca, posicionamiento, comunicación, auditorías, planes estratégicos y acompañamiento.',
-      tags: ['Branding', 'Identidad', 'Editorial', 'Packaging'],
-      testId: 'service-estrategia',
+      title: 'Un universo que lo expresa.',
+      desc: 'Le damos concepto, identidad, voz y una dirección visual. Creamos o renovamos tu identidad gráfica si el proyecto lo necesita.',
     },
     {
       num: '03',
-      title: 'Identidad & Diseño',
-      desc: 'Branding, sistemas visuales, diseño gráfico, piezas digitales y aplicaciones de marca.',
-      tags: ['Webs', 'E-commerce', 'UX/UI', 'Motion'],
-      testId: 'service-diseno',
+      title: 'Un equipo con dirección.',
+      desc: 'Bajamos la marca a aplicaciones concretas y guiamos las primeras ejecuciones con vos o tu equipo.',
     },
-    {
-      num: '04',
-      title: 'Paid Media',
-      desc: 'Planificación de campañas, Meta Ads/Google Ads, segmentación, testing, optimización y reporting.',
-      tags: ['Paid Media'],
-      testId: 'paid-media'
-    },
-    {
-      num: '05',
-      title: 'Diseño & Desarrollo Web',
-      desc: 'Landing pages, webs insitucionales y experiencias digitales alineadas con la identidad.',
-      tags: ['Webs', 'E-commerce', 'UX/UI'],
-      testId: 'service-web'
-    }
   ];
+
+  open = signal<number | null>(null);
+
   private platformId = inject(PLATFORM_ID);
-  private host: ElementRef<HTMLElement> = inject(ElementRef);
-  private trigger: ScrollTrigger | null = null;
+  private host = inject(ElementRef) as ElementRef<HTMLElement>;
+  private smoothScroll = inject(SmoothScrollService);
+  private triggers: ScrollTrigger[] = [];
+
+  private get canHover(): boolean {
+    return isPlatformBrowser(this.platformId) && window.matchMedia('(hover: hover)').matches;
+  }
+
+  // Desktop: abre con hover. Mobile/touch: abre con tap.
+  hoverIn(i: number): void {
+    if (this.canHover) this.open.set(i);
+  }
+  hoverOut(): void {
+    if (this.canHover) this.open.set(null);
+  }
+  toggle(i: number): void {
+    if (this.canHover) return;
+    this.open.set(this.open() === i ? null : i);
+  }
+
+  goToContact(event: Event): void {
+    event.preventDefault();
+    this.smoothScroll.scrollTo('#contacto', { duration: 1.4 });
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    const articles = Array.from(
-      this.host.nativeElement.querySelectorAll<HTMLElement>('.service-row')
-    );
-    if (!articles.length) return;
-
-    gsap.set(articles, { opacity: 0, y: 60 });
-
-    this.trigger = ScrollTrigger.create({
-      trigger: this.host.nativeElement,
-      start: 'top 85%',
-      once: true,
-      onEnter: () => {
-        gsap.to(articles, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: 'power4.out',
-        });
-      },
+    const items = Array.from(this.host.nativeElement.querySelectorAll<HTMLElement>('[data-reveal]'));
+    items.forEach((el) => {
+      gsap.set(el, { opacity: 0, y: 40 });
+      this.triggers.push(
+        ScrollTrigger.create({
+          trigger: el,
+          start: 'top 88%',
+          once: true,
+          onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }),
+        }),
+      );
     });
   }
 
   ngOnDestroy(): void {
-    this.trigger?.kill();
+    this.triggers.forEach((t) => t.kill());
   }
 }

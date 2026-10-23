@@ -1,11 +1,10 @@
-<section id="top" class="relative flex min-h-screen flex-col justify-center overflow-hidden px-5 pt-28 md:px-10">
+<section id="top" class="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-5 pb-16 pt-28 md:min-h-screen md:px-10">
     <!-- Gradiente verde que sigue al mouse -->
-    <div class="hero-mouse-glow pointer-events-none absolute h-[40rem] w-[40rem] rounded-full bg-[#C6FF00]/25 blur-[140px]"
+    <div class="hero-mouse-glow pointer-events-none absolute h-[20rem] w-[20rem] rounded-full bg-[#C6FF00]/20 blur-[90px] md:h-[40rem] md:w-[40rem] md:bg-[#C6FF00]/25 md:blur-[140px]"
         aria-hidden="true"></div>
 
-
     <!-- Fade hacia abajo: suaviza el corte del gradiente contra el Marquee -->
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-black md:h-72"
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-black md:h-72"
         aria-hidden="true"></div>
 
     <p class="pointer-events-none absolute right-4 top-1/2 hidden origin-right -translate-y-1/2 rotate-90 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.5em] text-white/50 lg:block"
@@ -33,10 +32,10 @@
     </div>
 
     <div class="relative z-10">
-        <p class="hero-eyebrow mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.4em] text-[#C6FF00]"
+        <p class="hero-eyebrow mb-6 flex items-start gap-3 text-xs font-bold uppercase tracking-[0.25em] text-[#C6FF00] md:tracking-[0.4em]"
             data-testid="hero-eyebrow">
-            <span class="inline-block h-2 w-2 bg-[#C6FF00]"></span>
-                ESTRATEGIA, DIRECCIÓN E IDENTIDAD DE MARCA.
+            <span class="mt-1 inline-block h-2 w-2 shrink-0 bg-[#C6FF00]"></span>
+            Estrategia, dirección e identidad de marca.
         </p>
 
         <h1 class="font-display font-extrabold uppercase leading-[0.85] tracking-tighter">
@@ -49,16 +48,16 @@
                 </span>
             </app-masked-line>
             <app-masked-line [onLoad]="true" [delay]="0.65">
-                <span class="text-stroke-white block text-[clamp(2.4rem,10.5vw,13rem)]">UNIVERSO</span>
+                <span class="text-stroke-white block text-[clamp(2.4rem,10.5vw,13rem)]">UNIVERSO.</span>
             </app-masked-line>
         </h1>
 
         <div class="mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-end md:justify-between">
             <p class="hero-subcopy max-w-md text-base text-neutral-400 md:text-lg" data-testid="hero-subcopy">
-                Te ayudamos a definir qué te hace diferente y convertirlo en un universo de marca coherente: lo que vos decís, cómo lo mostras y la experiencia que ofrecés.
+                Te ayudamos a definir qué te hace diferente y convertirlo en un universo de marca coherente: lo que vos decís, cómo lo mostrás y la experiencia que ofrecés.
             </p>
             <a href="#contacto" data-testid="hero-scroll-cta" (click)="goToServices($event)"
-                class="hero-cta group flex w-fit items-center gap-3 border-2 border-white px-6 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:border-[#C6FF00] hover:bg-[#C6FF00] hover:text-black">
+                class="hero-cta group flex w-full items-center justify-between gap-3 border-2 border-white px-6 py-3 text-xs font-bold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:border-[#C6FF00] hover:bg-[#C6FF00] hover:text-black md:w-fit md:justify-start">
                 Hablemos de tu marca
                 <svg lucideArrowDown [size]="16" [strokeWidth]="2"
                     class="animate-bounce transition-transform duration-300 group-hover:animate-none group-hover:translate-y-0.5"></svg>
